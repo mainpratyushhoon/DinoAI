@@ -1,0 +1,9 @@
+WIDTH = 1000
+HEIGHT = 400
+
+GROUND_Y = 320
+
+FPS = 60
+
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
