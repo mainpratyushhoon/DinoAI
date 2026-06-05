@@ -1,11 +1,23 @@
 import pygame
+
 from settings import *
 
+
 class Dino:
+
     def __init__(self):
 
-        self.width = 40
-        self.height = 50
+        self.image = pygame.image.load(
+            "assets/dino.png"
+        ).convert_alpha()
+
+        self.image = pygame.transform.scale(
+            self.image,
+            (50, 50)
+        )
+
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
 
         self.x = 100
         self.y = GROUND_Y - self.height
@@ -20,12 +32,15 @@ class Dino:
     def jump(self):
 
         if self.on_ground:
+
             self.vel_y = self.jump_force
+
             self.on_ground = False
 
     def update(self):
 
         self.vel_y += self.gravity
+
         self.y += self.vel_y
 
         if self.y >= GROUND_Y - self.height:
@@ -38,17 +53,13 @@ class Dino:
 
     def draw(self, screen):
 
-        pygame.draw.rect(
-            screen,
-            BLACK,
-            (self.x, self.y, self.width, self.height)
+        screen.blit(
+            self.image,
+            (self.x, self.y)
         )
 
     def get_rect(self):
 
-        return pygame.Rect(
-            self.x,
-            self.y,
-            self.width,
-            self.height
+        return self.image.get_rect(
+            topleft=(self.x, self.y)
         )

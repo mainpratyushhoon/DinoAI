@@ -31,13 +31,13 @@ class Game:
 
         self.score += 1
 
-        self.game_speed += 0.001
-
+        if self.score % 500 == 0:
+            self.game_speed += 1
         self.dino.update()
 
         self.spawn_timer += 1
 
-        if self.spawn_timer > random.randint(60, 120):
+        if self.spawn_timer > random.randint(40, 120):
 
             self.obstacles.append(
                 Obstacle()

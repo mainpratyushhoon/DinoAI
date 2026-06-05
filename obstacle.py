@@ -3,12 +3,30 @@ import random
 
 from settings import *
 
+
 class Obstacle:
 
     def __init__(self):
 
-        self.width = random.randint(20, 40)
-        self.height = random.randint(40, 70)
+        cactus_types = [
+            ("assets/smallcactus.png", (30, 50)),
+            ("assets/tallcactus.png", (35, 70)),
+            ("assets/twocactus.png", (60, 50))
+        ]
+
+        filename, size = random.choice(cactus_types)
+
+        self.image = pygame.image.load(
+            filename
+        ).convert_alpha()
+
+        self.image = pygame.transform.scale(
+            self.image,
+            size
+        )
+
+        self.width = self.image.get_width()
+        self.height = self.image.get_height()
 
         self.x = WIDTH
 
@@ -20,17 +38,13 @@ class Obstacle:
 
     def draw(self, screen):
 
-        pygame.draw.rect(
-            screen,
-            BLACK,
-            (self.x, self.y, self.width, self.height)
+        screen.blit(
+            self.image,
+            (self.x, self.y)
         )
 
     def get_rect(self):
 
-        return pygame.Rect(
-            self.x,
-            self.y,
-            self.width,
-            self.height
+        return self.image.get_rect(
+            topleft=(self.x, self.y)
         )
