@@ -31,7 +31,7 @@ class Game:
 
         self.score += 1
 
-        if self.score % 500 == 0:
+        if self.score % 100 == 0:
             self.game_speed += 1
         self.dino.update()
 
