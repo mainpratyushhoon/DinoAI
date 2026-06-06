@@ -2,7 +2,9 @@ import pygame
 
 from settings import *
 from game import Game
+from ai.neural_network import NeuralNetwork
 
+brain = NeuralNetwork()
 pygame.init()
 
 screen = pygame.display.set_mode(
@@ -24,9 +26,12 @@ while running:
     clock.tick(FPS)
 
     state = game.get_state()
+    if state is not None:
 
-    if state:
-        print(state)
+        decision = brain.forward(state)
+        print(decision)
+        if decision > 0.5:
+            game.dino.jump()
 
     for event in pygame.event.get():
 
