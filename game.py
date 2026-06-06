@@ -98,3 +98,19 @@ class Game:
     def restart(self):
 
         self.__init__()
+    
+    def get_state(self):
+
+        if len(self.obstacles) == 0:
+            return None
+
+        next_obstacle = self.obstacles[0]
+
+        return [
+            next_obstacle.x - self.dino.x,
+            next_obstacle.width,
+            next_obstacle.height,
+            self.game_speed,
+            self.dino.y,
+            self.dino.vel_y
+        ]

@@ -23,6 +23,11 @@ while running:
 
     clock.tick(FPS)
 
+    state = game.get_state()
+
+    if state:
+        print(state)
+
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
