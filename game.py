@@ -2,15 +2,12 @@ import pygame
 import random
 
 from settings import *
-from dino import Dino
 from obstacle import Obstacle
 
 
 class Game:
 
     def __init__(self):
-
-        self.dino = Dino()
 
         self.obstacles = []
 
@@ -20,24 +17,18 @@ class Game:
 
         self.spawn_timer = 0
 
-        self.game_over = False
-
         self.font = pygame.font.SysFont(None, 40)
 
     def update(self):
-
-        if self.game_over:
-            return
 
         self.score += 1
 
         if self.score % 100 == 0:
             self.game_speed += 1
-        self.dino.update()
 
         self.spawn_timer += 1
 
-        if self.spawn_timer > random.randint(40, 120):
+        if self.spawn_timer > random.randint(25, 170):
 
             self.obstacles.append(
                 Obstacle()
@@ -52,11 +43,6 @@ class Game:
             if obstacle.x + obstacle.width < 0:
                 self.obstacles.remove(obstacle)
 
-            if self.dino.get_rect().colliderect(
-                obstacle.get_rect()
-            ):
-                self.game_over = True
-
     def draw(self, screen):
 
         screen.fill(WHITE)
@@ -69,8 +55,6 @@ class Game:
             3
         )
 
-        self.dino.draw(screen)
-
         for obstacle in self.obstacles:
             obstacle.draw(screen)
 
@@ -82,24 +66,7 @@ class Game:
 
         screen.blit(score_text, (20, 20))
 
-        if self.game_over:
-
-            text = self.font.render(
-                "Game Over! Press R",
-                True,
-                BLACK
-            )
-
-            screen.blit(
-                text,
-                (350, 100)
-            )
-
-    def restart(self):
-
-        self.__init__()
-    
-    def get_state(self):
+    def get_state(self, dino):
 
         if len(self.obstacles) == 0:
             return None
@@ -107,10 +74,10 @@ class Game:
         next_obstacle = self.obstacles[0]
 
         return [
-            next_obstacle.x - self.dino.x,
-            next_obstacle.width,
-            next_obstacle.height,
-            self.game_speed,
-            self.dino.y,
-            self.dino.vel_y
+            (next_obstacle.x - dino.x) / WIDTH,
+            next_obstacle.width / 100,
+            next_obstacle.height / 100,
+            self.game_speed / 20,
+            dino.y / HEIGHT,
+            dino.vel_y / 20
         ]
