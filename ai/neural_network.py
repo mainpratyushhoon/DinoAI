@@ -5,9 +5,9 @@ class NeuralNetwork:
 
     def __init__(self):
 
-        self.W1 = np.random.randn(7, 8)
-        self.W2 = np.random.randn(8, 8)
-        self.W3 = np.random.randn(8, 1)
+        self.W1 = np.random.randn(7, 32)
+        self.W2 = np.random.randn(32, 16)
+        self.W3 = np.random.randn(16, 1)
 
     def sigmoid(self, x):
         return 1 / (1 + np.exp(-x))
@@ -34,7 +34,7 @@ class NeuralNetwork:
 
         return child
 
-    def mutate(self, mutation_rate=0.1):
+    def mutate(self, mutation_rate=0.025):
 
         for matrix in [self.W1, self.W2, self.W3]:
 

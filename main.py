@@ -3,7 +3,7 @@ import pygame
 from settings import *
 from game import Game
 from ai.agent import Agent
-
+generation_scores = []
 
 def next_generation(old_agents):
 
@@ -11,7 +11,9 @@ def next_generation(old_agents):
         old_agents,
         key=lambda a: a.fitness
     )
-
+    generation_scores.append(
+    best.fitness
+    )
     print(
         f"Best fitness: {best.fitness}"
     )
@@ -155,3 +157,20 @@ while running:
         game = Game()
 
 pygame.quit()
+
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(10, 5))
+
+plt.plot(
+    range(1, len(generation_scores) + 1),
+    generation_scores
+)
+
+plt.xlabel("Generation")
+plt.ylabel("Best Fitness")
+plt.title("Dino AI Learning Curve")
+
+plt.grid(True)
+
+plt.show()
