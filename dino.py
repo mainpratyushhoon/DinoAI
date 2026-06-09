@@ -6,7 +6,9 @@ from settings import *
 class Dino:
 
     def __init__(self):
+        self.jumps_used = 0
 
+        self.max_jumps = 2
         self.image = pygame.image.load(
             "assets/dino.png"
         ).convert_alpha()
@@ -31,9 +33,11 @@ class Dino:
 
     def jump(self):
 
-        if self.on_ground:
+        if self.jumps_used < self.max_jumps:
 
             self.vel_y = self.jump_force
+
+            self.jumps_used += 1
 
             self.on_ground = False
 
@@ -46,6 +50,8 @@ class Dino:
         if self.y >= GROUND_Y - self.height:
 
             self.y = GROUND_Y - self.height
+
+            self.jumps_used = 0
 
             self.vel_y = 0
 

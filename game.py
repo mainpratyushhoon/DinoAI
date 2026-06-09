@@ -9,6 +9,7 @@ class Game:
 
     def __init__(self):
 
+
         self.obstacles = []
 
         self.score = 0
@@ -79,5 +80,6 @@ class Game:
             next_obstacle.height / 100,
             self.game_speed / 20,
             dino.y / HEIGHT,
-            dino.vel_y / 20
+            dino.vel_y / 20,
+            dino.jumps_used / 2
         ]

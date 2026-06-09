@@ -5,7 +5,7 @@ class NeuralNetwork:
 
     def __init__(self):
 
-        self.W1 = np.random.randn(6, 8)
+        self.W1 = np.random.randn(7, 8)
         self.W2 = np.random.randn(8, 8)
         self.W3 = np.random.randn(8, 1)
 
@@ -42,6 +42,6 @@ class NeuralNetwork:
 
             matrix += mask * np.random.normal(
                 0,
-                0.5,
+                0.1,
                 matrix.shape
             )
