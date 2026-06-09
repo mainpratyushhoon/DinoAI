@@ -34,7 +34,7 @@ class NeuralNetwork:
 
         return child
 
-    def mutate(self, mutation_rate=0.1):
+    def mutate(self, mutation_rate=0.05):
 
         for matrix in [self.W1, self.W2, self.W3]:
 

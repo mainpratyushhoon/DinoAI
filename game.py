@@ -24,12 +24,12 @@ class Game:
 
         self.score += 1
 
-        if self.score % 100 == 0:
-            self.game_speed += 1
+        if self.score % 500 == 0:
+            self.game_speed += 0.5
 
         self.spawn_timer += 1
 
-        if self.spawn_timer > random.randint(25, 170):
+        if self.spawn_timer > random.normalvariate(60, 10):
 
             self.obstacles.append(
                 Obstacle()
