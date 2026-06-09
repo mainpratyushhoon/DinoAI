@@ -1,35 +1,75 @@
 import pygame
-
+import random
 from settings import *
 from game import Game
 from ai.agent import Agent
 generation_scores = []
+def select_parent(population):
 
-def next_generation(old_agents):
+    tournament = random.sample(
+        population,
+        5
+    )
 
-    best = max(
-        old_agents,
+    return max(
+        tournament,
         key=lambda a: a.fitness
     )
-    generation_scores.append(
-    best.fitness
+def next_generation(old_agents):
+
+    old_agents.sort(
+        key=lambda a: a.fitness,
+        reverse=True
     )
+
+    best = old_agents[0]
+
+    generation_scores.append(
+        best.fitness
+    )
+
     print(
         f"Best fitness: {best.fitness}"
     )
 
-    new_agents = [
-        Agent(best.brain.copy())
-    ]
+    new_agents = []
 
-    for _ in range(len(old_agents) - 1):
+    ELITES = 5
 
-        brain = best.brain.copy()
-
-        brain.mutate()
+    for i in range(ELITES):
 
         new_agents.append(
-            Agent(brain)
+            Agent(
+                old_agents[i].brain.copy()
+            )
+        )
+
+    parents = old_agents[:20]
+
+    while len(new_agents) < len(old_agents):
+
+        parent1 = select_parent(
+            parents
+        )
+
+        parent2 = select_parent(
+            parents
+        )
+
+        child_brain = (
+            parent1.brain.crossover(
+                parent2.brain
+            )
+        )
+
+        child_brain.mutate(
+            mutation_rate=0.1
+        )
+
+        new_agents.append(
+            Agent(
+                child_brain
+            )
         )
 
     return new_agents

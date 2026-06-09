@@ -5,7 +5,7 @@ class NeuralNetwork:
 
     def __init__(self):
 
-        self.W1 = np.random.randn(7, 32)
+        self.W1 = np.random.randn(10, 32)
         self.W2 = np.random.randn(32, 16)
         self.W3 = np.random.randn(16, 1)
 
@@ -34,7 +34,7 @@ class NeuralNetwork:
 
         return child
 
-    def mutate(self, mutation_rate=0.025):
+    def mutate(self, mutation_rate=0.1):
 
         for matrix in [self.W1, self.W2, self.W3]:
 
@@ -42,6 +42,29 @@ class NeuralNetwork:
 
             matrix += mask * np.random.normal(
                 0,
-                0.1,
+                0.05,
                 matrix.shape
             )
+    def crossover(self, other):
+
+        child = NeuralNetwork()
+
+        child.W1 = np.where(
+            np.random.rand(*self.W1.shape) < 0.5,
+            self.W1,
+            other.W1
+        )
+
+        child.W2 = np.where(
+            np.random.rand(*self.W2.shape) < 0.5,
+            self.W2,
+            other.W2
+        )
+
+        child.W3 = np.where(
+            np.random.rand(*self.W3.shape) < 0.5,
+            self.W3,
+            other.W3
+        )
+
+        return child

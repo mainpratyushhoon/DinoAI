@@ -69,17 +69,38 @@ class Game:
 
     def get_state(self, dino):
 
-        if len(self.obstacles) == 0:
+        upcoming = []
+
+        for obs in self.obstacles:
+
+            if obs.x + obs.width >= dino.x:
+                upcoming.append(obs)
+
+        if len(upcoming) == 0:
             return None
 
-        next_obstacle = self.obstacles[0]
+        obs1 = upcoming[0]
+
+        if len(upcoming) > 1:
+            obs2 = upcoming[1]
+        else:
+            obs2 = obs1
 
         return [
-            (next_obstacle.x - dino.x) / WIDTH,
-            next_obstacle.width / 100,
-            next_obstacle.height / 100,
+
+            (obs1.x - dino.x) / WIDTH,
+            obs1.width / 100,
+            obs1.height / 100,
+
+            (obs2.x - dino.x) / WIDTH,
+            obs2.width / 100,
+            obs2.height / 100,
+
             self.game_speed / 20,
+
             dino.y / HEIGHT,
+
             dino.vel_y / 20,
+
             dino.jumps_used / 2
         ]
